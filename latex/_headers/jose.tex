@@ -1,0 +1,87 @@
+\usepackage{calc}
+
+\newlength\tabsize                    % Indentation
+\setlength\tabsize\parindent          % Indentation
+\setlength\parindent{0pt}             % Indentation
+\newcommand{\ind}{\hspace*{\tabsize}} % Indentation
+\newcommand{\bnd}{\ind\ind}           % Indentation
+
+%COUNTER TO STRING
+    \newcommand{\ctrtostr}[1]{\the\roman\value{#1}}
+    \newcommand{\definelr}[2]{
+        \renewcommand{\leftside\ctrtostr{depth}}{\left#1}
+        \renewcommand{\rightside\ctrtostr{depth}}{\right#1}
+    }
+
+%MAGIC
+\newcommand{\PrmDef}[3]{
+    \expandafter\newcommand\csname #1\endcsname[#2]{#3}\relax
+}
+
+%use:
+%PrmDef{<FUNCTION NAME>}{<NUMBERS OF ARGUMENTS IT WILL TAKE>}{<VALUE IT WILL TAKE>}
+
+%ENVIRONMENTS
+    \newenvironment{LEMMA}[1]{{\sc Lema}:    {\em#1.}\\}{}
+    \newenvironment{THEOR}[1]{{\sc Teorema}: {\em#1.}\\}{}
+
+%TUPLE-LIKE COMMANDS
+    \makeatletter
+        \newcommand{\SET}{\left\{\SETnextarg}
+        \newcommand{\SETnextarg}{\@ifnextchar{\bgroup}{\SETgobble}{\right\}}}
+        \newcommand{\SETgobble}[1]{#1\@ifnextchar{\bgroup}{,\SETgobble}{\right\}}}
+
+        \newcommand{\TUPLE}{\left\langle\TUPLEnextarg}
+        \newcommand{\TUPLEnextarg}{\@ifnextchar{\bgroup}{\TUPLEgobble}{\right\rangle}}
+        \newcommand{\TUPLEgobble}[1]{#1\@ifnextchar{\bgroup}{,\TUPLEgobble}{\right\rangle}}
+
+        \newcommand{\POINT}{\left(\POINTnextarg}
+        \newcommand{\POINTnextarg}{\@ifnextchar{\bgroup}{\POINTgobble}{\right)}}
+        \newcommand{\POINTgobble}[1]{#1\@ifnextchar{\bgroup}{,\POINTgobble}{\right)}}
+    \makeatother
+
+%ARROW-LIKE COMMANDS
+    \newcommand{\rar}{\rightarrow}                          %ARROW Right
+    \newcommand{\RAR}{\Rightarrow}                          %ARROW Right Meta
+    \newcommand{\lar}{\leftarrow}                           %ARROW Left
+    \newcommand{\LAR}{\Leftarrow}                           %ARROW Left Meta
+    \newcommand{\bim}{\leftrightarrow}                      %ARROW Iff
+    \newcommand{\BIM}{\Leftrightarrow}                      %ARROW Iff Meta
+
+%MISC COMMANDS
+    \newcommand{\eqc}[1]{\left\llbracket#1\right\rrbracket} %Equivalence Class
+    \newcommand{\eop}{\marginpar{$\blacksquare$}}           %End of Proof
+    \newcommand{\eol}{\hrule$ $\\}                          %End of line (with hr)
+    \newcommand{\nl}{$ $\newline}                           %Force Newline
+    \newcommand{\cls}{\newpage}                             %Shorthand for clearpage
+    \newcommand*\elide{\textup{[\,\dots] }}                 %[...]
+    \newcommand{\ind}{\hspace*{\parindent}}
+    \newcommand{\tripstar}{
+        \begin{center}
+            {\LARGE * * *}
+        \end{center}
+    }
+
+%CASE DEFINITIONS
+    \newcommand{\casedef}[1]{
+        \begin{cases}
+            \begin{align*}
+                #1
+            \end{align*}
+        \end{cases}
+    }
+
+%ENVIRONMENTS
+    \newenvironment{definition}[1]{
+        \nl\nl{\sc Definição} {\bf #1}:
+        \addcontentsline{toc}{subsection}{Def. #1}\\\ind
+    }{
+        \tripstar
+    }
+
+    \renewenvironment{proof*}{
+        \n\nl{\sc Prova:}\\
+    }{}
+    \renewenvironment{proof}
+        {\begin{proof*}\ind}
+        {\end{proof*}}

@@ -1,0 +1,307 @@
+\chapter{Lógica}
+    \epigraph{\justify
+        It seems to me now that mathematics 
+        is capable of an artistic excellence 
+        as great as that of any music 
+        \elide because it gives in absolute 
+        perfection that combination, 
+        characteristic of great art, of godlike 
+        freedom, with the sense of inevitable 
+        destiny; because, in fact, it constructs 
+        an ideal world where everything is 
+        perfect and yet true.
+        }{\textit{Bertrand Russell.}}    
+    \cls
+    \paragraph{}
+        A forma mais básica de lógica que nos propomos
+        a tratar é a ``lógica proposicional'', que 
+        veremos ser intimamente ligada com álgebras de
+        Heyting. Ela consiste de uma coleção de letras
+        proposicionais, que podem ser vistas como 
+        condições, e destas ``fórmulas atômicas'', 
+        obtemos fórmulas compostas através do uso de 
+        conectivos e operadores lógicos.
+    \paragraph{}
+        O estudo da lógica proposicional tem seu 
+        mérito, mas não será especialmente util para
+        nós, afinal vamos tratar das álgebras de 
+        Heyting em profundidade. Mas, no entanto, 
+        convém mostrar um pouco desta para contrastar
+        com a {\em lógica de primeira ordem} que logo
+        iremos tratar.
+    \paragraph{}
+        Grosseiramente, lógica proposicional se ocupa
+        de sentenças como:
+        $$(P\rar Q)\rar P\rar Q$$
+        $$(P\land Q)\rar P$$
+    \paragraph{}
+        Pode-se ver como, associando ``valores de 
+        verdade'' às letras proposicionais, obtemos
+        valores das fórmulas compostas. Mais que isso,
+        os teoremas da lógica proposicional são 
+        exatamente as tautologias.
+    \paragraph{}
+        Avançando no nível de complexidade, no 
+        deparamos com a ``lógica de primeira ordem'',
+        que trataremos agora com mais cuidado.
+
+    \section{Lógica de Primeira Ordem}
+        \paragraph{}
+            Nossa abordagem para lógica pode não ser
+            a melhor para todos os propósitos, mas 
+            acreditamos que ela será util ao aproximar
+            a estrutura de uma língua com uma 
+            {\em estrutura} de fato.
+        \paragraph{}
+            Definimos uma língua formal como sendo 
+            as sentenças potenciais de uma gramática
+            (finitária), isto é, dadas $\TUPLE{R_0}{\ldots}{R_n}$
+            relações $\rho_0,\ldots,\rho_n$-árias,
+            respectivamente; e uma coleção $\omega$ --- geralmente
+            infinito potencial --- de variáveis 
+            $\SET{x_0}{x_1}{x_2}{\ldots}$, dizemos 
+            que uma sequência (finita) de símbolos $\sigma$ é 
+            da língua associada à assinatura 
+            exatamente quando vale alguma das 
+            condições abaixo:
+        \begin{enumerate}[label=\alph*)]
+            \item $\sigma\equiv R_k\POINT{x_{\alpha_0}}{\ldots}{x_{\alpha_{\rho_k}}}$, com $0\leq k\leq n$, e $x_{\alpha_i}$ todos em $\omega$.
+            \item $\sigma\equiv \varphi\land\psi$, com $\varphi,\psi$ da língua.
+            \item $\sigma\equiv \varphi\lor \psi$, com $\varphi,\psi$ da língua.
+            \item $\sigma\equiv \neg\varphi$, com $\varphi$ da língua.
+            \item $\sigma\equiv \forall x_i:\varphi$, com $x_i$ variável em $\omega$ e $\varphi$ da língua.
+            \item $\sigma\equiv \exists x_i:\varphi$, com $x_i$ variável em $\omega$ e $\varphi$ da língua.
+        \end{enumerate}
+        \paragraph{}
+            Como não iremos tratar de línguas com 
+            muitos símbolos, fixaremos uma coleção
+            de variáveis $\SET{x_0}{x_1}{\ldots}$,
+            para termos: dada uma assinatura $\Sigma=
+            \TUPLE{R_0}{\ldots}{R_n}$, associamos 
+            uma língua $\mathcal{L}_\Sigma$ como 
+            definido acima.
+        
+        \subsection{Satisfatibilidade}
+        \paragraph{}
+            Mas, afinal, qual é a interpretação 
+            destas formulas? Pois, o significado 
+            desta contrução vem exatamente da 
+            {\em definição} de interpretação, de
+            significado.
+        \paragraph{}
+            Primeiro, observemos que para montar 
+            uma língua só usamos a quantidade 
+            de relações e a aridade de cada uma 
+            delas, $\rho_i$. Desta forma, vamos 
+            simplificar ainda mais e fixar 
+            $\SET{R_0}{R_1}{\ldots}$ símbolos 
+            canônicos para as relações, assim, 
+            se tivermos 
+            $\Sigma=\TUPLE{\rho_0}{\ldots}{\rho_k}$,
+            podemos definir $\mathcal{L}_\Sigma$ 
+            como se espera: use os símbolos $R_i$ 
+            para relações $\rho_i$-árias, 
+            respectivamente.
+        \paragraph{}
+            Segundo, definâmos ``estruturas'', 
+            pois se uma fórmula é verdade ela deve
+            ser verdade em algum lugar (apesar que)
+            algumas coisas são verdade em todos os 
+            lugares. Para tanto, vamos definir uma 
+            ``valoração de variáveis'':
+
+        \begin{definition}{Valoração de Variáveis}
+                Dada uma classe $A$ de objetos, uma
+                valoração de variáveis das variáveis 
+                de uma língua $\mathcal{L}$ de 
+                primeira ordem com alguma assinatura,
+                dizemos que $f$ é uma valoração de 
+                variáveis quando ela é uma realização
+                dos símbolos das $\mathcal{L}$-variáveis
+                em objetos de $A$.
+            \paragraph{}
+                Adicionalmente, dados um objeto $o$ 
+                de $A$, uma variável $x_j$ de 
+                $\mathcal{L}$ e uma valoração $f$, 
+                definimos:
+                $$f[x_j\slash{o}](x_i) = \casedef{
+                    o\text{, &se }i = j;\\
+                    f(x_i)\text{, &se }i\not=j.
+                }$$
+        \end{definition}
+
+        \paragraph{}
+            Uma estrutura é uma coleção de informações:
+            $$\mathfrak{A} = \TUPLE{A}{R_0}{\ldots}{R_n}$$
+        \paragraph{}
+            Onde $A$ é uma classe não vazia chamada ``domínio'' 
+            e cada uma $R_i$ é uma relação definida 
+            sobre o mesmo. Dizemos que uma estrutura 
+            e uma língua são {\em compatíveis} 
+            exatamente quando a aridade de cada $R_i$ 
+            é $\rho_i$.
+
+        \begin{definition}{Satisfatibilidade}
+                Sejam $\varphi$ uma $\mathcal{L}$-fórmula; 
+                $f$ uma valoração de variáveis; e 
+                $\mathfrak{A} = \TUPLE{A}{P_0}{\ldots}{P_n}$
+                uma estrutura, e sejam $\mathcal{L}$ e 
+                $\mathfrak{A}$ compatíveis.
+                $$ \mathfrak A\vDash_f\varphi$$
+            \paragraph{}
+                Que se lê  ``$\mathfrak{A}$ satisfaz 
+                $\varphi$'', ``$\mathfrak{A}$ crê que 
+                $\varphi$'' ou ``$\varphi$ vale em 
+                $\mathfrak{A}$'', É definido recursivamente:
+            \begin{align*}
+                \varphi\equiv R_i\POINT{x_0}{\ldots}{x_{\alpha_{\rho_i}}}
+                    &\RAR \mathfrak A\vDash_f\varphi \bim P_i\POINT{f(x_0)}{\ldots}{f(x_{\alpha_{\rho_i}})}.\\
+                \varphi\equiv \sigma\land\psi    
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\sigma \text{ e } \mathfrak A\vDash_f\psi.\\
+                \varphi\equiv \sigma\lor \psi    
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\sigma \text{ ou } \mathfrak A\vDash_f\psi.\\
+                \varphi\equiv \neg\sigma         
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ não }\mathfrak A\vDash_f\sigma.\\
+                \varphi\equiv \sigma\rar\psi         
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \mathfrak A\vDash_f\neg\sigma \text{ ou } \mathfrak A\vDash_f\psi.\\
+                \varphi\equiv \forall x_i:\sigma 
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ para todo $a$ de $A$: } \mathfrak A\vDash_{f[x_i\slash{a}]}\varphi.\\
+                \varphi\equiv \exists x_i:\sigma 
+                    &\RAR \mathfrak A\vDash_f\varphi \bim \text{ existe algum $a$ de $A$: } \mathfrak A\vDash_{f[x_i\slash{a}]}\varphi.
+            \end{align*}
+            \paragraph{}
+                Existe uma questão delicada nessa quantificação
+                que fazemos nas últimas duas clausulas: ela é 
+                necessáriamente de primeira ordem, desta forma,
+                não definimos {\em nada}. A solução oferecida é
+                tratar destas quantificações em um nível acima, 
+                em uma meta-teoria.
+        \end{definition}
+
+        \paragraph{}
+            Vamos tomar um parágrafo para explorar o significado 
+            da definição (admitidamente meta-teorética) de 
+            satisfatibilidade. Primeiro, vemos que se a fórmula 
+            sendo interpretada é um sentença\footnote{{\em ie.} 
+            todas as variáveis da fórmula estão quantificadas 
+            sobre por algum $\forall$ ou um $\exists$, em todos 
+            os escopos.}, então não importa quais valorações $f,
+            f'$ que dermos, dada uma $\sigma$-sentença:
+            $$ \mathfrak{A}\vDash_{f} \sigma \BIM \mathfrak{A}\vDash_{f'} \sigma $$
+        \paragraph{}
+            Segundo, se uma fórmula da língua é $\varphi\POINT{x}{y}{z}$\footnote{
+            Onde $x,y,z$ são açucar sintático para alguns $x_i, 
+            x_j, x_k$.} onde estas vairáveis estão livres na 
+            fórmula, então se $\hat{x}, \hat{y}, \hat{z}$ forem
+            objetos do domínio de uma estrutura compatível, 
+            ``$\varphi\POINT{\hat{x}}{\hat{y}}{\hat{z}}$'' ---
+            que gostaríamos que significasse quão verdade é dizer 
+            $\hat{x}, \hat{y}, \hat{z}$ estão relacionados como
+            $\varphi$ predica --- se traduz simplesmente em:
+            $f'=f[x\slash\hat x; y\slash\hat y; z\slash\hat z]$
+            uma nova valoração de variáveis:
+            $$ \mathfrak{A}\vDash_{f'} \varphi $$
+        \paragraph{}
+            Codifica exatamente isso. $\vDash_{f'}$ vale se e só
+            se a estrutura dá uma semiose à $\varphi$ ``avaliada''
+            nos objetos $\hat{x},\hat{y},\hat{z}$. Assim, 
+            satisfatibilidade é a codificação dessa interpretação 
+            de uma coisa {\em sintática}, a fórmula, em uma coisa 
+            {\em semântica} relações entre objetos, quantificações 
+            sobre o domínio, etc.
+        \paragraph{}
+            Finalmente, --- dado um coleção de fórmulas $\Gamma$
+            de uma língua compatível com $\mathfrak A$ estrutura e uma 
+            valoração $f$ ---, dizemos que:
+            $$\mathfrak{A}\vDash_f\Gamma\BIM\text{ para toda }\varphi\text{ de }\Gamma\text{: }\mathfrak{A}\vDash_f\varphi$$
+        \paragraph{}
+            E que, se $\Gamma$ for coleção de sentenças, então dizemos:
+            $$\mathfrak{A}\vDash\Gamma\BIM\text{ para toda }\varphi\text{ de }\Gamma\text{: }\mathfrak{A}\vDash_f\varphi$$
+            onde $f$ é qualquer (fixa) valoração das variáveis, por exemplo: $f(x_i)=\hat{x}$\footnote{Pelo menos uma tal 
+            valoração existe pois os domínios de estruturas são não vazios.}
+
+        \subsection{Provabilidade}
+        \paragraph{}
+            O interessante da satisfatibilidade como 
+            definida antes é sua relação com a
+            provabilidade. Para explora-la, devemos 
+            tratar de ``teorias''.
+        \paragraph{}
+            Agora, sendo um pouco colecionista, 
+            considere a coleção das fórmulas de 
+            de uma língua $\mathcal{L}_\Sigma$,
+            com $\Sigma = \TUPLE{R_0}{\ldots}{R_n}$.
+        \begin{definition}{Consequência Sintática}
+                A ideia por trás da definição é que existem coisas 
+                que são verdadeiras independente de interpretação e 
+                localidade. Por exemplo, não importa se 
+                $\forall x_7\forall x_8:R_3(x_7,x_8)$ é verdade ou não
+                em um uma dada estrutura (de assinatura compatível), 
+                sempre vale que: $[\forall x_7\forall x_8:R_3(x_7,x_8)]
+                \rar[\exists x_7:\exists x_8:R_3(x_7,x_8)]$. Isto é, 
+                existem sentenças que não dependem de interpretações de 
+                variávei nem da semântica das relações: suas verdades 
+                são {\em consequências sintáticas}.
+            \paragraph{}
+                Então vamos definir uma relação entre conjuntos de sentenças 
+                de uma língua e sentenças desta mesma língua a de consequência
+                sintática.
+            \paragraph{}
+                Seja $\Gamma\subset\mathcal{L}$ conjunto de sentenças de uma 
+                língua. Seja também $\varphi$ uma sentença da mesma língua. 
+                Dizemos que $\varphi$ é consequência sintática de $\Gamma$:
+                $$\Gamma\vdash\varphi\BIM(\mathfrak{A}\vDash\Gamma\RAR\mathfrak{A}\vDash\varphi)\footnote{
+                    Onde $\mathfrak{A}$ é uma estrutura de assinatura compatível. Estamos, de certa forma,
+                    com $\mathfrak{A}$ livre sobre estruturas, o que é assustador. Afinal, para teoria de 
+                    conjuntos, por exemplo, potencialmente estaríamos quantificando sobre classe próprias. 
+                    E, em teorias mais fortes, todo tipo de coisas informalizáveis. Já estamos, no entanto, 
+                    em uma meta-teoria generosa.\\ Pouco mais abaixo de onde estamos se agita um mar de metafísica, e questões 
+                    epistemo e ontológicas no qual não ousamos mergulhar.
+                }$$
+        \end{definition}
+        \paragraph{}
+            A definição se extende para conjuntos de sentenças simplemente dizendo
+            $$\Gamma\vdash\Sigma\BIM\text{ para todo $\sigma$ de $\Sigma$ temos: } \Gamma\vdash\sigma$$
+
+        \paragraph{}
+            Esta é uma definição de fato bem estranha, definimos uma coisa ser sintáticamente 
+            consequente da outra em termos de interpretações, que são semânticas em 
+            natureza\footnote{
+                É claro que é possível fazê-lo de maneira puramente sintática, que é útil 
+                para computadores e provadores automáticos de teoremas, mas cremos que é 
+                uma abordagem que oculta algo da beleza da relação inseparável entre $\vdash$ 
+                e $\vDash$.\\
+                Por outro lado, uma abordagem sintática {\em é} de fato mais precisa, pois não
+                necessita quantificar sobre as estruturas compatíveis com a língua, 
+                {\em etc.}
+            }. No entanto,
+            ela é uma relação extremamente razoável: não há interpretação que tenha $\Gamma$ 
+            sem ter $\varphi$. De alguma forma, dizer que ``Em todo lugar que $\Gamma$ vale, 
+            $\varphi$ vale'' nos garante que não importa o lugar, apenas $\Gamma$ e $\varphi$.
+        
+        \subsubsection{Teorias}
+        \begin{definition}{Teoria}
+                Dada uma língua, um subconjunto de sentenças $\mathcal{T}$ é dito uma teoria
+                quando ele é não-vazio e $\vdash$-fechado. Isto é, se $\mathcal{T}\vdash\tau$ 
+                então $\tau$ já estava em $\mathcal{T}$. Ou seja, é uma coleção de sentenças 
+                que contém todas as suas consequências semânticas.
+        \end{definition}
+        \paragraph{}
+            \newcommand{\theoryof}[1]{\mathcal{T}_{#1}}
+            Dada uma língua $\mathcal{L}$, e um conjunto de sentenças não-vazio desta que batizamos ``axiomas'' 
+            $\mathcal{A}$, dizemos que um conjunto de sentenças $\mathcal{T}$ é a teoria de 
+            $\mathcal{A}$ exatamente quando {\em para toda $\tau$ de $\mathcal{T}$, temos 
+            $\mathcal{A}\vdash\tau$}, que podemos abreviar para $\theoryof{\mathcal{A}}$.
+        \paragraph{}
+            O fato de que, para um conjunto de axiomas conforme acima, $\theoryof{\mathcal{A}}$ é teoria 
+            verifica-se por:
+        \begin{proof*}
+            Suponha que $\theoryof{\mathcal{A}}\vdash\tau$.
+            \\Então, $\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\tau$.\\
+            Mas $\mathfrak{A}\vDash\theoryof{\mathcal{A}}\RAR\mathfrak{A}\vDash\mathcal{A}$ pois 
+            $\mathcal{A}\subseteq\theoryof{\mathcal{A}}$.\\
+            Por outro lado, $\mathfrak{A}\vDash\mathcal{A}\RAR\mathfrak{A}\vDash\theoryof{\mathcal{A}}$, 
+            pois, para cada $\sigma$ em $\theoryof{\mathcal{A}}$, $\mathcal{A}\vdash\sigma$.\\
+            Assim, $\mathcal{A}\vdash\tau$, e portanto, $\tau$ está em $\theoryof{\mathcal{A}}$.
+        \end{proof*}
+        
